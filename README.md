@@ -15,6 +15,12 @@ FreshFlow Software is a made-up company (software for food and manufacturing bus
    - **Needs Human Review**: the checker is not sure, so a person decides.
 5. Approved content gets a **Telugu translation** step that uses a glossary, so prices and disclaimers stay exact.
 
+## Workflow
+
+![FreshFlow n8n workflow](n8n-workflow.png.png)
+
+The exported workflow is in [docs/freshflow-workflow.json](docs/freshflow-workflow.json). Import it into n8n to try it.
+
 ## Tools used
 
 | Tool | Purpose |
