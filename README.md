@@ -17,9 +17,15 @@ FreshFlow Software is a made-up company (software for food and manufacturing bus
 
 ## Workflow
 
-![FreshFlow n8n workflow](n8n-workflow.png.png)
+![FreshFlow n8n workflow](n8n-workflow.png)
 
 The exported workflow is in [docs/freshflow-workflow.json](docs/freshflow-workflow.json). Import it into n8n to try it.
+
+## Results in Notion
+
+Every request is saved in a Notion table with its status, the final content, the number of attempts, checker notes and the Telugu translation.
+
+![FreshFlow content review table in Notion](notion-table.png)
 
 ## Tools used
 
