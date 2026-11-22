@@ -8,14 +8,16 @@ FreshFlow uses two AI roles. A **writer** drafts content. A **checker** reviews 
 
 | Step | Node in n8n | What it does |
 |---|---|---|
-| 1 | Form trigger | Receives the content request |
-| 2 | Message a model (writer) | Drafts the content using the brand guide and returns JSON |
-| 3 | Code (parse JSON) | Reads the writer's JSON so later steps can use it |
-| 4 | Message a model (checker) | Tests the draft against the 10 brand and compliance rules |
-| 5 | Code | Reads the checker's result |
-| 6 | Edit Fields | Sets `final_status` |
-| 7 | Translator step | Translates approved content into Telugu using a glossary |
-| 8 | Notion | Saves the row in the "FreshFlow Content Review" table |
+| 1 | Content request form | Receives the content request |
+| 2 | Writer | Drafts the content using the brand guide and returns JSON |
+| 3 | Parse writer output | Reads the writer's JSON so later steps can use it |
+| 4 | Checker | Tests the draft against the 10 brand and compliance rules |
+| 5 | Parse checker result | Reads the checker's result |
+| 6 | Set final status | Sets `final_status` |
+| 7 | Translator | Translates approved content into Telugu using a glossary |
+| 8 | Parse translation | Reads the Telugu translation |
+| 9 | Save to Notion | Saves the row in the "FreshFlow Content Review" table |
+| Error path | Save error to Notion | If the Writer step fails, saves the error in Notion |
 
 ## The three outcomes
 
