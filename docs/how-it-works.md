@@ -21,11 +21,15 @@ FreshFlow uses two AI roles. A **writer** drafts content. A **checker** reviews 
 
 | Status | Meaning | What happens next |
 |---|---|---|
-| Approved | The draft passes every rule | Content is translated and saved for use |
-| Refused | The request breaks a rule | Saved as refused, not translated |
+| Approved | The draft passes every rule, or the checker fixed it and explained the changes | Content is translated and saved for human review before publishing |
+| Refused | The request cannot be written safely, or has no facts to work from | Saved as refused, not translated |
 | Needs Human Review | The checker is unsure, or the request is too vague | A person reads it and decides |
 
-Example: a request that only says the product "saves time" has no proof or detail behind it. The pipeline sends it to Needs Human Review instead of approving a claim nobody can support.
+Examples from test runs:
+
+- A request that only said the product "saves time", with no proof or detail, went to Needs Human Review in an earlier test.
+- A request for a stock tracking intro with no product facts was refused, and the checker asked for facts.
+- A request asking for a guaranteed 40% cost cut and a competitor comparison was approved after the checker removed those claims and explained the changes in Checker Notes.
 
 ## Prompts and versions
 
