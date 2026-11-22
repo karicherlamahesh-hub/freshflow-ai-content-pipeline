@@ -10,7 +10,7 @@ FreshFlow Software is a made-up company (software for food and manufacturing bus
 2. A **writer** step (Claude) drafts the content using the FreshFlow brand guide.
 3. A **checker** step (Claude) tests the draft against 10 brand and compliance rules.
 4. The result is saved to a Notion table with one of three statuses:
-   - **Approved**: the draft passes all rules.
+   - **Approved**: the draft passes all rules. A person still reviews it before publishing.
    - **Refused**: the request breaks a rule and cannot be written safely.
    - **Needs Human Review**: the checker is not sure, so a person decides.
 5. Approved content gets a **Telugu translation** step that uses a glossary, so prices and disclaimers stay exact.
@@ -39,6 +39,7 @@ FreshFlow Software is a made-up company (software for food and manufacturing bus
 | [Quick start](docs/quick-start.md) | Set up and run the pipeline step by step |
 | [How it works](docs/how-it-works.md) | Workflow steps, statuses and testing method |
 | [Claude API call](docs/api-call.md) | One API call explained line by line |
+| [Brand guide and rules](docs/rules.md) | The brand guide and 10 compliance rules |
 
 ## Limits
 
