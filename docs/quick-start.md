@@ -52,19 +52,19 @@ You need:
 
 1. Create a workflow named "FreshFlow content pipeline".
 2. Add the nodes in this order:
-   1. Form trigger
-   2. Anthropic "Message a model" (writer)
-   3. Code (parse the writer's JSON)
-   4. Anthropic "Message a model" (checker)
-   5. Code (read the checker's result)
-   6. Edit Fields (set `final_status`)
-   7. Notion (save the row)
+   1. Content request form (form trigger)
+   2. Writer (Anthropic "Message a model")
+   3. Parse writer output (Code)
+   4. Checker (Anthropic "Message a model")
+   5. Parse checker result (Code)
+   6. Set final status (Edit Fields)
+   7. Save to Notion
 3. Add your Anthropic and Notion credentials inside n8n. Do not put them in the workflow itself.
 4. Run a test from the form and check the row in Notion.
 
 ## Step 7: Add Telugu translation
 
-1. Add a translator step (Claude with a glossary) between Edit Fields and Notion.
+1. Add a step named Translator (Claude with a glossary) between Set final status and Save to Notion. Add a Code node named Parse translation after it.
 2. Put prices, product names and disclaimers in the glossary so they stay exact.
 3. Test with a request that contains a price and a disclaimer. Confirm both appear unchanged in the Telugu output.
 
