@@ -22,7 +22,7 @@
         0
       ],
       "id": "e15aa181-0d48-4091-8d40-174b0a13ad44",
-      "name": "On form submission",
+      "name": "Content request form",
       "webhookId": "0d304d22-4ad1-4267-ab15-fbdb6448c339"
     },
     {
@@ -52,7 +52,7 @@
         0
       ],
       "id": "0b7546f1-dcae-4fe7-8459-35494e34a70a",
-      "name": "Message a model",
+      "name": "Writer",
       "credentials": {
         "anthropicApi": {
           "id": "B5ofFVh7Lqo4GD6o",
@@ -72,7 +72,7 @@
         0
       ],
       "id": "b5c4b90d-1215-4648-a7eb-4fc8c78cf43b",
-      "name": "Code in JavaScript"
+      "name": "Parse writer output"
     },
     {
       "parameters": {
@@ -85,7 +85,7 @@
         "messages": {
           "values": [
             {
-              "content": "=REQUEST:\n{{ $('On form submission').item.json.Request }}\n\nDRAFT:\n{{ $json.content }}"
+              "content": "=REQUEST:\n{{ $('Content request form').item.json.Request }}\n\nDRAFT:\n{{ $json.content }}"
             }
           ]
         },
@@ -100,7 +100,7 @@
         0
       ],
       "id": "7e138ddc-f14b-4c85-bef6-4151c02d3b0d",
-      "name": "Message a model1",
+      "name": "Checker",
       "credentials": {
         "anthropicApi": {
           "id": "B5ofFVh7Lqo4GD6o",
@@ -110,7 +110,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const writer = $('Code in JavaScript').first().json;\nconst form = $('On form submission').first().json;\nconst results = [];\nfor (const item of $input.all()) {\n  let text = \"\";\n  const content = item.json.content;\n  if (Array.isArray(content)) {\n    for (const block of content) {\n      if (block.type === \"text\") {\n        text += block.text;\n      }\n    }\n  } else if (typeof content === \"string\") {\n    text = content;\n  }\n  text = text.replace(/```json|```/g, \"\").trim();\n  let data;\n  try {\n    data = JSON.parse(text);\n  } catch (e) {\n    data = { verdict: \"bad_format\", problems: [text] };\n  }\n  const problems = Array.isArray(data.problems) ? data.problems.join(\" | \") : String(data.problems || \"\");\n  results.push({\n    json: {\n      request: form.Request,\n      status: writer.status,\n      content: writer.content,\n      reason: writer.reason,\n      verdict: data.verdict || \"\",\n      problems: problems\n    }\n  });\n}\nreturn results;"
+        "jsCode": "const writer = $('Parse writer output').first().json;\nconst form = $('Content request form').first().json;\nconst results = [];\nfor (const item of $input.all()) {\n  let text = \"\";\n  const content = item.json.content;\n  if (Array.isArray(content)) {\n    for (const block of content) {\n      if (block.type === \"text\") {\n        text += block.text;\n      }\n    }\n  } else if (typeof content === \"string\") {\n    text = content;\n  }\n  text = text.replace(/```json|```/g, \"\").trim();\n  let data;\n  try {\n    data = JSON.parse(text);\n  } catch (e) {\n    data = { verdict: \"bad_format\", problems: [text] };\n  }\n  const problems = Array.isArray(data.problems) ? data.problems.join(\" | \") : String(data.problems || \"\");\n  results.push({\n    json: {\n      request: form.Request,\n      status: writer.status,\n      content: writer.content,\n      reason: writer.reason,\n      verdict: data.verdict || \"\",\n      problems: problems\n    }\n  });\n}\nreturn results;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -119,7 +119,7 @@
         0
       ],
       "id": "cb5c2a32-bd61-4d36-9a68-1fef691fe973",
-      "name": "Code in JavaScript1"
+      "name": "Parse checker result"
     },
     {
       "parameters": {
@@ -143,7 +143,55 @@
         0
       ],
       "id": "c5a9456e-911f-4768-9849-b1f0701848e5",
-      "name": "Edit Fields"
+      "name": "Set final status"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-haiku-5-5",
+          "mode": "list",
+          "cachedResultName": "claude-haiku-5-5"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=STATUS: {{ $json.final_status }}\n\nTEXT:\n{{ $json.content }}"
+            }
+          ]
+        },
+        "options": {
+          "system": "You are a Telugu translator for FreshFlow Software, an Indian software company for food and manufacturing businesses. You will get a STATUS and a TEXT in English.  If STATUS is not exactly \"Approved\", reply with only {\"translation\": \"\"} and nothing else.  If STATUS is \"Approved\", translate the TEXT into natural, simple Telugu. Rules: 1. Do not add, remove, or soften any claim. The Telugu must say exactly what the English says. 2. Keep the same number of sentences or lines as the English. 3. Keep these in English letters, exactly as written: FreshFlow, FreshFlow Software. 4. Keep numbers and prices as written, for example Rs 4,999. 5. Use this glossary:    \"Book a demo\" = \"డెమో బుక్ చేయండి\"    \"Prices may change. Contact sales for a current quote.\" = \"ధరలు మారవచ్చు. తాజా కోట్ కోసం సేల్స్ బృందాన్ని సంప్రదించండి.\"  Reply with only a JSON object and nothing else, in this form: {\"translation\": \"the Telugu text\"} Do not use markdown code fences.",
+          "maxTokens": 3000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        0
+      ],
+      "id": "2cb29720-a99d-445e-a413-fd8eae5eca4c",
+      "name": "Translator",
+      "credentials": {
+        "anthropicApi": {
+          "id": "B5ofFVh7Lqo4GD6o",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const original = $('Set final status').first().json;\nlet text = \"\";\nconst content = $input.first().json.content;\nif (Array.isArray(content)) {\n  for (const block of content) {\n    if (block.type === \"text\") {\n      text += block.text;\n    }\n  }\n} else if (typeof content === \"string\") {\n  text = content;\n}\ntext = text.replace(/```json|```/g, \"\").trim();\nlet translation = \"\";\ntry {\n  translation = JSON.parse(text).translation || \"\";\n} catch (e) {\n  translation = \"\";\n}\nreturn [{ json: { ...original, translation: translation } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        0
+      ],
+      "id": "7f717793-9657-4a4d-a719-63d6cee2233f",
+      "name": "Parse translation"
     },
     {
       "parameters": {
@@ -191,61 +239,13 @@
         0
       ],
       "id": "98a0e327-c524-4e8a-92f2-9f1028e24683",
-      "name": "Create a database page",
+      "name": "Save to Notion",
       "credentials": {
         "notionApi": {
           "id": "1KoT6HbQRYdpCGGB",
           "name": "Notion account"
         }
       }
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "claude-haiku-5-5",
-          "mode": "list",
-          "cachedResultName": "claude-haiku-5-5"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=STATUS: {{ $json.final_status }}\n\nTEXT:\n{{ $json.content }}"
-            }
-          ]
-        },
-        "options": {
-          "system": "You are a Telugu translator for FreshFlow Software, an Indian software company for food and manufacturing businesses. You will get a STATUS and a TEXT in English.  If STATUS is not exactly \"Approved\", reply with only {\"translation\": \"\"} and nothing else.  If STATUS is \"Approved\", translate the TEXT into natural, simple Telugu. Rules: 1. Do not add, remove, or soften any claim. The Telugu must say exactly what the English says. 2. Keep the same number of sentences or lines as the English. 3. Keep these in English letters, exactly as written: FreshFlow, FreshFlow Software. 4. Keep numbers and prices as written, for example Rs 4,999. 5. Use this glossary:    \"Book a demo\" = \"డెమో బుక్ చేయండి\"    \"Prices may change. Contact sales for a current quote.\" = \"ధరలు మారవచ్చు. తాజా కోట్ కోసం సేల్స్ బృందాన్ని సంప్రదించండి.\"  Reply with only a JSON object and nothing else, in this form: {\"translation\": \"the Telugu text\"} Do not use markdown code fences.",
-          "maxTokens": 3000
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.anthropic",
-      "typeVersion": 1,
-      "position": [
-        1632,
-        0
-      ],
-      "id": "2cb29720-a99d-445e-a413-fd8eae5eca4c",
-      "name": "Message a model2",
-      "credentials": {
-        "anthropicApi": {
-          "id": "B5ofFVh7Lqo4GD6o",
-          "name": "Anthropic account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const original = $('Edit Fields').first().json;\nlet text = \"\";\nconst content = $input.first().json.content;\nif (Array.isArray(content)) {\n  for (const block of content) {\n    if (block.type === \"text\") {\n      text += block.text;\n    }\n  }\n} else if (typeof content === \"string\") {\n  text = content;\n}\ntext = text.replace(/```json|```/g, \"\").trim();\nlet translation = \"\";\ntry {\n  translation = JSON.parse(text).translation || \"\";\n} catch (e) {\n  translation = \"\";\n}\nreturn [{ json: { ...original, translation: translation } }];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1920,
-        0
-      ],
-      "id": "7f717793-9657-4a4d-a719-63d6cee2233f",
-      "name": "Code in JavaScript2"
     },
     {
       "parameters": {
@@ -257,12 +257,12 @@
           "cachedResultName": "41a6404d-046c-80a4-96f8-000b0ceeb1d9",
           "cachedResultUrl": "https://app.notion.com/p/41a6404d046c80fe9477cb5c8afd27f4"
         },
-        "title": "={{ 'Failed: ' + $('On form submission').first().json.Request.substring(0, 50) }}",
+        "title": "={{ 'Failed: ' + $('Content request form').first().json.Request.substring(0, 50) }}",
         "propertiesUi": {
           "propertyValues": [
             {
               "key": "Request|rich_text",
-              "textContent": "={{ $('On form submission').first().json.Request }}"
+              "textContent": "={{ $('Content request form').first().json.Request }}"
             },
             {
               "key": "Error details|rich_text",
@@ -279,7 +279,7 @@
         144
       ],
       "id": "f7a40530-9afc-4d12-abc7-44aa194841e4",
-      "name": "Create a database page1",
+      "name": "Save error to Notion",
       "credentials": {
         "notionApi": {
           "id": "1KoT6HbQRYdpCGGB",
@@ -290,95 +290,95 @@
   ],
   "pinData": {},
   "connections": {
-    "On form submission": {
+    "Content request form": {
       "main": [
         [
           {
-            "node": "Message a model",
+            "node": "Writer",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Message a model": {
+    "Writer": {
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "Parse writer output",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Create a database page1",
+            "node": "Save error to Notion",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript": {
+    "Parse writer output": {
       "main": [
         [
           {
-            "node": "Message a model1",
+            "node": "Checker",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Message a model1": {
+    "Checker": {
       "main": [
         [
           {
-            "node": "Code in JavaScript1",
+            "node": "Parse checker result",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript1": {
+    "Parse checker result": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Set final status",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "Set final status": {
       "main": [
         [
           {
-            "node": "Message a model2",
+            "node": "Translator",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Message a model2": {
+    "Translator": {
       "main": [
         [
           {
-            "node": "Code in JavaScript2",
+            "node": "Parse translation",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript2": {
+    "Parse translation": {
       "main": [
         [
           {
-            "node": "Create a database page",
+            "node": "Save to Notion",
             "type": "main",
             "index": 0
           }
@@ -391,7 +391,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "8c5591f1-2a93-408c-8a9e-c52097fdfdc1",
+  "versionId": "da854277-7088-488a-a2a4-ee0e15f3fd43",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "967dfcba3454a5bf2991cac23f70b723136baef4e8d629e25d5be22e75a45fbd"
