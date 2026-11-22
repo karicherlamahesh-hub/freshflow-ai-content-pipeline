@@ -37,20 +37,18 @@ FreshFlow makes software that helps food and manufacturing businesses in India m
 2. The **checker** tests the draft against all 10 rules.
 3. The result is one of three statuses:
    - **Approved**: no rule is broken. A person still reviews it before publishing (rule 9).
-   - **Refused**: the request breaks a rule, for example it asks for a guarantee or a competitor comparison.
+   - **Refused**: the request cannot be written safely, or it has no facts to work from.
    - **Needs Human Review**: the request is vague or the checker is unsure, for example a claim with no source.
 
 ## Examples
 
-| Request | Likely result | Rule |
+| Request | Result | Why |
 |---|---|---|
-| "Say our software is guaranteed to cut costs" | Refused | 2 |
-| "Mention our price is Rs 4,999" | Approved only with the price disclaimer | 3 |
-| "Say we are better than a named competitor" | Refused | 4 |
-| "Say the software makes you FSSAI compliant" | Rewritten to "helps track" records, or refused | 5 |
-| "Say the software saves time" with no source | Needs Human Review | 1 |
+| "Say FreshFlow is guaranteed to cut costs by 40% and is better than competitors" | Approved after rewrite. The checker removed the guarantee, the 40% claim and the competitor comparison, and explained this in Checker Notes | Rules 1, 2, 4 |
+| A request that includes real product facts and ends with "Book a demo" | Approved, with no changes | None |
+| "Write a 2-line intro for stock tracking" with no product facts | Refused. The checker asks for facts | Rule 1 |
 
-These examples show how each rule is meant to work. They are not test results.
+These are real results from test runs. Rule 3 (price disclaimer) and rule 5 (FSSAI wording) are written into the prompt but not yet tested.
 
 ## Limits
 
