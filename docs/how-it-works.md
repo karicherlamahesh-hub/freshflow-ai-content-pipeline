@@ -1,5 +1,16 @@
 # How it works
 
+## Table of contents
+
+- [Overview](#overview)
+- [Workflow steps](#workflow-steps)
+- [The three outcomes](#the-three-outcomes)
+- [Prompts and versions](#prompts-and-versions)
+- [Testing method](#testing-method)
+- [Telugu translation](#telugu-translation)
+- [Known limits](#known-limits)
+- [Ideas for next steps](#ideas-for-next-steps)
+
 ## Overview
 
 FreshFlow uses two AI roles. A **writer** drafts content. A **checker** reviews the draft against the rules. Separating the two roles means the checker is not grading its own work.
