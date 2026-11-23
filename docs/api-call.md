@@ -60,5 +60,5 @@ client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
 ## Safety
 
-- Keep the key in a secret or environment variable. If it is ever shown publicly, delete it in the Console and create a new one.
-- Do not commit the key to GitHub.
+> [!WARNING]
+> Never put your API key in code or commit it to GitHub. Keep it in a secret or an environment variable. If the key is ever shown publicly, delete it in the Console and create a new one.
