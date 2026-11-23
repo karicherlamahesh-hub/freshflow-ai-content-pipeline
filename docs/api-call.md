@@ -1,5 +1,13 @@
 # Claude API call
 
+## Table of contents
+
+- [Example](#example)
+- [What each part does](#what-each-part-does)
+- [How FreshFlow uses it](#how-freshflow-uses-it)
+- [Common errors](#common-errors)
+- [Safety](#safety)
+
 This page explains one API call, the building block behind the FreshFlow writer, checker and translator steps.
 
 ## Example
