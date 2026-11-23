@@ -2,6 +2,18 @@
 
 This guide takes you from nothing to a working FreshFlow test in about 30 minutes. You do not need to know Python.
 
+## Table of contents
+
+- [Before you start](#before-you-start)
+- [Step 1: Keep your API key safe](#step-1-keep-your-api-key-safe)
+- [Step 2: Make your first API call](#step-2-make-your-first-api-call)
+- [Step 3: Add the brand guide and rules](#step-3-add-the-brand-guide-and-rules)
+- [Step 4: Keep a prompt library](#step-4-keep-a-prompt-library)
+- [Step 5: Run the test set](#step-5-run-the-test-set)
+- [Step 6: Build the workflow in n8n](#step-6-build-the-workflow-in-n8n)
+- [Step 7: Add Telugu translation](#step-7-add-telugu-translation)
+- [Troubleshooting](#troubleshooting)
+
 ## Before you start
 
 You need:
