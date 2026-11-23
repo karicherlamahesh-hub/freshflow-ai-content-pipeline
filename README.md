@@ -2,28 +2,53 @@
 
 A writer-plus-checker pipeline that drafts marketing content with the Claude API, checks every draft against 10 brand and compliance rules, and sends each request to one of three outcomes: **Approved**, **Refused** or **Needs Human Review**.
 
-FreshFlow Software is a made-up company (software for food and manufacturing businesses in India). This is a personal portfolio project built to practise AI content workflows, prompt versioning and output testing.
+> [!NOTE]
+> FreshFlow Software is a made-up company (software for food and manufacturing businesses in India). This is a personal portfolio project built to practise AI content workflows, prompt versioning and output testing.
 
-## What it does
+## Table of contents
+
+- [Overview](#overview)
+- [How a request flows](#how-a-request-flows)
+- [Workflow diagram](#workflow-diagram)
+- [Results in Notion](#results-in-notion)
+- [Tools used](#tools-used)
+- [Project status and results](#project-status-and-results)
+- [Documentation](#documentation)
+- [Limits](#limits)
+- [Author](#author)
+
+## Overview
+
+FreshFlow takes a content request, writes a draft, checks the draft against written rules, and records the outcome. A person always makes the final call before anything is published.
+
+| Item | Detail |
+|---|---|
+| Input | A content request submitted through a form |
+| Steps | Writer, checker and translator (all Claude) |
+| Rules | 10 brand and compliance rules |
+| Outcomes | Approved, Refused, Needs Human Review |
+| Output | A Notion table row, plus a Telugu translation for approved content |
+
+## How a request flows
 
 1. A user submits a content request through a form.
-2. A **writer** step (Claude) drafts the content using the FreshFlow brand guide.
-3. A **checker** step (Claude) tests the draft against 10 brand and compliance rules.
+2. The **writer** step (Claude) drafts the content using the FreshFlow brand guide.
+3. The **checker** step (Claude) tests the draft against the 10 brand and compliance rules.
 4. The result is saved to a Notion table with one of three statuses:
    - **Approved**: the draft passes all rules, or the checker fixed it and explained the changes. A person still reviews it before publishing.
    - **Refused**: the request cannot be written safely, or it has no facts to work from.
    - **Needs Human Review**: the checker is not sure, so a person decides.
-5. Approved content gets a **Telugu translation** step that uses a glossary, so prices and disclaimers stay exact.
+5. Approved content goes to a **Telugu translation** step that uses a glossary, so prices and disclaimers stay exact.
 
-## Workflow
+## Workflow diagram
 
 ![FreshFlow n8n workflow](n8n-workflow.png)
 
-The exported workflow is in [docs/freshflow-workflow.json](docs/freshflow-workflow.json). Import it into n8n to try it.
+The exported workflow is in [docs/freshflow-workflow.json](docs/freshflow-workflow.json). To try it, import the file into n8n.
 
 ## Results in Notion
 
-Every request is saved in a Notion table with its status, the final content, the number of attempts, checker notes and the Telugu translation.
+Every request is saved in a Notion table with its status, the final content, the number of attempts, the checker notes and the Telugu translation.
 
 ![FreshFlow content review table in Notion](notion-table.png)
 
@@ -51,13 +76,15 @@ Every request is saved in a Notion table with its status, the final content, the
 | [Quick start](docs/quick-start.md) | Set up and run the pipeline step by step |
 | [How it works](docs/how-it-works.md) | Workflow steps, statuses and testing method |
 | [Claude API call](docs/api-call.md) | One API call explained line by line |
-| [Brand guide and rules](docs/rules.md) | The brand guide and 10 compliance rules |
+| [Brand guide and rules](docs/rules.md) | The brand guide and the 10 compliance rules |
 
 ## Limits
 
-- This is a demo with a fictional company. Do not use it for real compliance decisions.
+> [!WARNING]
+> This is a demo with a fictional company. Do not use it for real compliance decisions.
+
 - The checker is an AI model and can make mistakes. That is why uncertain cases go to human review.
-- Never commit your API key. See the quick start for how to keep it safe.
+- Never commit your API key. The [quick start](docs/quick-start.md) shows how to keep it safe.
 
 ## Author
 
