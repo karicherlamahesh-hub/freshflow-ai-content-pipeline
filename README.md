@@ -15,6 +15,7 @@ A writer-plus-checker pipeline that drafts marketing content with the Claude API
 - [Project status and results](#project-status-and-results)
 - [Documentation](#documentation)
 - [Limits](#limits)
+- [License](#license)
 - [Author](#author)
 
 ## Overview
@@ -85,6 +86,10 @@ Every request is saved in a Notion table with its status, the final content, the
 
 - The checker is an AI model and can make mistakes. That is why uncertain cases go to human review.
 - Never commit your API key. The [quick start](docs/quick-start.md) shows how to keep it safe.
+
+## License
+
+This project is released under the MIT License. See the [LICENSE](LICENSE) file.
 
 ## Author
 
