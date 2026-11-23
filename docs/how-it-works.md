@@ -69,7 +69,9 @@ The same test set is reused each time so results can be compared fairly.
 
 ## Known limits
 
-- The checker is an AI model, so it can miss problems or flag good content. Human review is the safety net.
+> [!NOTE]
+> The checker is an AI model, so it can miss problems or flag good content. Human review is the safety net.
+
 - The 10 rules and the company are made up for this demo.
 - Tests were run on a small set of requests and do not prove accuracy at scale.
 
