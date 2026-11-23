@@ -1,5 +1,14 @@
 # Brand guide and compliance rules
 
+## Table of contents
+
+- [About FreshFlow Software](#about-freshflow-software)
+- [Brand guide](#brand-guide)
+- [Compliance rules](#compliance-rules)
+- [How the pipeline uses the rules](#how-the-pipeline-uses-the-rules)
+- [Examples](#examples)
+- [Limits](#limits)
+
 The writer step follows the brand guide. The checker step tests every draft against the 10 compliance rules. FreshFlow Software is a made-up company, so these rules are written for this demo.
 
 ## About FreshFlow Software
