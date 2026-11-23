@@ -88,3 +88,8 @@ You need:
 | API call fails with a credit error | Your Anthropic account has credit |
 | n8n cannot read the writer's reply | The writer step must return valid JSON; check the parse step |
 | Nothing appears in Notion | The Notion credential has access to the table |
+
+
+## Next step
+
+To understand each step of the pipeline in detail, read [How it works](how-it-works.md).
