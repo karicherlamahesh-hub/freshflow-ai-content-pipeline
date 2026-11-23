@@ -78,6 +78,7 @@ Every request is saved in a Notion table with its status, the final content, the
 | [How it works](docs/how-it-works.md) | Workflow steps, statuses and testing method |
 | [Claude API call](docs/api-call.md) | One API call explained line by line |
 | [Brand guide and rules](docs/rules.md) | The brand guide and the 10 compliance rules |
+| [Glossary](docs/glossary.md) | Short meanings of the terms used in the docs |
 
 ## Limits
 
