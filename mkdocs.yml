@@ -1,0 +1,23 @@
+site_name: FreshFlow AI Content Pipeline
+site_url: https://karicherlamahesh-hub.github.io/freshflow-ai-content-pipeline/
+repo_url: https://github.com/karicherlamahesh-hub/freshflow-ai-content-pipeline
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Quick start: quick-start.md
+  - How it works: how-it-works.md
+  - API call: api-call.md
+  - Rules: rules.md
+  - Glossary: glossary.md
+
+plugins:
+  - search
+  - callouts
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
