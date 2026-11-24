@@ -12,6 +12,7 @@ nav:
   - API call: api-call.md
   - Rules: rules.md
   - Glossary: glossary.md
+  - FAQ: faq.md
   - Changelog: changelog.md
 
 plugins:
