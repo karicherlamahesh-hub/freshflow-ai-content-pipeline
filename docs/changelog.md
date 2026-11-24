@@ -7,6 +7,7 @@ All notable changes to the FreshFlow docs.
 - Published the docs as a website with MkDocs and GitHub Pages.
 - Added automatic publishing with GitHub Actions.
 - Added a link to the documentation website in the README.
+- Added a changelog page and a FAQ page.
 
 ## 23 November 2026
 
