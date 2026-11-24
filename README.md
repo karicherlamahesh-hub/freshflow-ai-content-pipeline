@@ -2,6 +2,8 @@
 
 A writer-plus-checker pipeline that drafts marketing content with the Claude API, checks every draft against 10 brand and compliance rules, and sends each request to one of three outcomes: **Approved**, **Refused** or **Needs Human Review**.
 
+**Read the docs online:** [FreshFlow documentation website](https://karicherlamahesh-hub.github.io/freshflow-ai-content-pipeline/)
+
 > [!NOTE]
 > FreshFlow Software is a made-up company (software for food and manufacturing businesses in India). This is a personal portfolio project built to practise AI content workflows, prompt versioning and output testing.
 
