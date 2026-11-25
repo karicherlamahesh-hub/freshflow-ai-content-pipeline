@@ -10,6 +10,7 @@ nav:
   - Quick start: quick-start.md
   - How it works: how-it-works.md
   - API call: api-call.md
+  - HTTP status codes: http-status-codes.md
   - Rules: rules.md
   - Glossary: glossary.md
   - FAQ: faq.md
