@@ -1,2 +1,4 @@
 mkdocs-material
 mkdocs-callouts
+
+mkdocs-swagger-ui-tag
