@@ -5,11 +5,14 @@ info:
   description: Starts the FreshFlow workflow, which writes, checks and translates a post from the facts you send.
 servers:
   - url: https://YOUR-N8N-HOST/webhook
-    description: Your own n8n address. This is a placeholder.
+    description: Production. This is a placeholder for your own n8n address.
+  - url: https://YOUR-N8N-HOST/webhook-test
+    description: Test mode. After you click Execute workflow in n8n, it works for one call only. This is a placeholder for your own n8n address.
 paths:
   /your-webhook-path:
     post:
       summary: Starts the workflow that creates a post from your facts.
+      description: The API answers as soon as the workflow starts. A 200 response means started, not finished.
       requestBody:
         required: true
         content:
@@ -21,12 +24,12 @@ paths:
               properties:
                 request:
                   type: string
-                  description: Your instructions and the facts the post may use.
+                  description: Your instructions and the facts the post may use. If you leave this field out, the API still answers 200, but the workflow fails and no post is saved.
             example:
               request: "Write a short LinkedIn post about our new inventory tracking feature. Use only these facts: live stock counts for each shop, an alert when stock drops below 10 units, and mobile support. Do not add benefits or results that are not listed. Do not mention price."
       responses:
         '200':
-          description: The workflow was started. The finished post is not returned in this response. It is saved to Notion.
+          description: The workflow was started. This does not mean a post was created. The finished post is not returned in this response. It is saved to Notion.
           content:
             application/json:
               schema:
@@ -37,3 +40,23 @@ paths:
                     description: A short text that confirms the workflow started.
               example:
                 message: Workflow was started
+        '404':
+          description: The webhook is not registered. In test mode this happens when n8n is not listening. Click Execute workflow in n8n, then send the call again. The test webhook works for one call after each click.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    description: The status code.
+                  message:
+                    type: string
+                    description: Says that the webhook is not registered.
+                  hint:
+                    type: string
+                    description: What to do next.
+              example:
+                code: 404
+                message: The requested webhook "YOUR-WEBHOOK-PATH" is not registered.
+                hint: Click the 'Execute workflow' button on the canvas, then try again. (In test mode, the webhook only works for one call after you click this button)
