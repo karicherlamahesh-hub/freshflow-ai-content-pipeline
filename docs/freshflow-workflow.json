@@ -1,30 +1,6 @@
 {
-  "name": "FreshFlow content pipeline",
+  "name": "FreshFlow content pipeline - API",
   "nodes": [
-    {
-      "parameters": {
-        "formTitle": "FreshFlow content request",
-        "formFields": {
-          "values": [
-            {
-              "fieldLabel": "Request",
-              "fieldType": "textarea",
-              "requiredField": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.6,
-      "position": [
-        0,
-        0
-      ],
-      "id": "e15aa181-0d48-4091-8d40-174b0a13ad44",
-      "name": "Content request form",
-      "webhookId": "0d304d22-4ad1-4267-ab15-fbdb6448c339"
-    },
     {
       "parameters": {
         "modelId": {
@@ -51,7 +27,7 @@
         224,
         0
       ],
-      "id": "0b7546f1-dcae-4fe7-8459-35494e34a70a",
+      "id": "5b1b2b98-0358-43a6-9bfe-76e15f9fba5d",
       "name": "Writer",
       "credentials": {
         "anthropicApi": {
@@ -71,7 +47,7 @@
         592,
         0
       ],
-      "id": "b5c4b90d-1215-4648-a7eb-4fc8c78cf43b",
+      "id": "444cedc8-6714-42bb-8025-fcdac5fa0471",
       "name": "Parse writer output"
     },
     {
@@ -99,7 +75,7 @@
         816,
         0
       ],
-      "id": "7e138ddc-f14b-4c85-bef6-4151c02d3b0d",
+      "id": "a124cf78-125f-445b-aa75-c79b743177fd",
       "name": "Checker",
       "credentials": {
         "anthropicApi": {
@@ -118,7 +94,7 @@
         1184,
         0
       ],
-      "id": "cb5c2a32-bd61-4d36-9a68-1fef691fe973",
+      "id": "f588457f-ba12-4a69-b6b4-80f894e9272b",
       "name": "Parse checker result"
     },
     {
@@ -142,7 +118,7 @@
         1408,
         0
       ],
-      "id": "c5a9456e-911f-4768-9849-b1f0701848e5",
+      "id": "0e5e428e-3dbe-4a84-ad50-3cb4f5b208c4",
       "name": "Set final status"
     },
     {
@@ -171,7 +147,7 @@
         1632,
         0
       ],
-      "id": "2cb29720-a99d-445e-a413-fd8eae5eca4c",
+      "id": "aa412577-1b15-4cf8-a6fc-fd9422b11e08",
       "name": "Translator",
       "credentials": {
         "anthropicApi": {
@@ -190,7 +166,7 @@
         1920,
         0
       ],
-      "id": "7f717793-9657-4a4d-a719-63d6cee2233f",
+      "id": "d73d2ddd-cdd2-40ba-811d-3f15ecbb6a19",
       "name": "Parse translation"
     },
     {
@@ -238,7 +214,7 @@
         2128,
         0
       ],
-      "id": "98a0e327-c524-4e8a-92f2-9f1028e24683",
+      "id": "919ba426-d60d-40f7-8eb5-96b9240f70b1",
       "name": "Save to Notion",
       "credentials": {
         "notionApi": {
@@ -257,12 +233,12 @@
           "cachedResultName": "41a6404d-046c-80a4-96f8-000b0ceeb1d9",
           "cachedResultUrl": "https://app.notion.com/p/41a6404d046c80fe9477cb5c8afd27f4"
         },
-        "title": "={{ 'Failed: ' + $('Content request form').first().json.Request.substring(0, 50) }}",
+        "title": "={{ 'Failed: ' + ($('Content request form').first().json.Request || '(no request text)').substring(0, 50) }}",
         "propertiesUi": {
           "propertyValues": [
             {
               "key": "Request|rich_text",
-              "textContent": "={{ $('Content request form').first().json.Request }}"
+              "textContent": "={{ $('Content request form').first().json.Request || '(no request text)' }}"
             },
             {
               "key": "Error details|rich_text",
@@ -278,7 +254,7 @@
         640,
         144
       ],
-      "id": "f7a40530-9afc-4d12-abc7-44aa194841e4",
+      "id": "ef8a76ed-321d-403a-b0f7-161bd80dc25d",
       "name": "Save error to Notion",
       "credentials": {
         "notionApi": {
@@ -286,21 +262,49 @@
           "name": "Notion account"
         }
       }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e45c01de-6406-45dc-b86c-a1371f7329d9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        -192
+      ],
+      "id": "2fdbcb94-5639-423f-9cc6-033a7799b107",
+      "name": "Webhook",
+      "webhookId": "YOUR-WEBHOOK-ID"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "910b1edc-91b1-4550-a2e4-177d2e260486",
+              "name": "=Request",
+              "value": "={{ $json.body.request }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        320,
+        -192
+      ],
+      "id": "d8855406-0c00-4965-ba28-b23e04df504e",
+      "name": "Content request form"
     }
   ],
   "pinData": {},
   "connections": {
-    "Content request form": {
-      "main": [
-        [
-          {
-            "node": "Writer",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Writer": {
       "main": [
         [
@@ -384,6 +388,28 @@
           }
         ]
       ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Content request form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content request form": {
+      "main": [
+        [
+          {
+            "node": "Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -391,12 +417,12 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "da854277-7088-488a-a2a4-ee0e15f3fd43",
+  "versionId": "fba9aa33-8f22-4bfb-9c64-615cdea92d03",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "967dfcba3454a5bf2991cac23f70b723136baef4e8d629e25d5be22e75a45fbd"
   },
   "nodeGroups": [],
-  "id": "pBJjS51Q3SpfSkbU",
+  "id": "JYHARMNLtkSKJ9D1",
   "tags": []
 }
