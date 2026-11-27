@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: FreshFlow API
+  version: 1.0.0
+  description: Starts the FreshFlow workflow, which writes, checks and translates a post from the facts you send.
+servers:
+  - url: https://YOUR-N8N-HOST/webhook
+    description: Your own n8n address. This is a placeholder.
+paths:
+  /your-webhook-path:
+    post:
+      summary: Starts the workflow that creates a post from your facts.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - request
+              properties:
+                request:
+                  type: string
+                  description: Your instructions and the facts the post may use.
+            example:
+              request: "Write a short LinkedIn post about our new inventory tracking feature. Use only these facts: live stock counts for each shop, an alert when stock drops below 10 units, and mobile support. Do not add benefits or results that are not listed. Do not mention price."
+      responses:
+        '200':
+          description: The workflow was started. The finished post is not returned in this response. It is saved to Notion.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A short text that confirms the workflow started.
+              example:
+                message: Workflow was started
