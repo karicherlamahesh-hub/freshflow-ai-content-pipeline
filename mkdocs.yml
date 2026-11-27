@@ -12,6 +12,7 @@ nav:
   - API call: api-call.md
   - HTTP status codes: http-status-codes.md
   - API basics: api-basics.md
+  - API quick start: api-quick-start.md
   - API reference: api-reference.md
   - Rules: rules.md
   - Glossary: glossary.md
