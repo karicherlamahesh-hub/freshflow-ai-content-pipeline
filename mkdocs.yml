@@ -12,6 +12,7 @@ nav:
   - API call: api-call.md
   - HTTP status codes: http-status-codes.md
   - API basics: api-basics.md
+  - API reference: api-reference.md
   - Rules: rules.md
   - Glossary: glossary.md
   - FAQ: faq.md
@@ -20,6 +21,7 @@ nav:
 plugins:
   - search
   - callouts
+  - swagger-ui-tag
 
 markdown_extensions:
   - admonition
