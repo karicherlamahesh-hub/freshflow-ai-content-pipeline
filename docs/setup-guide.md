@@ -194,3 +194,5 @@ When you finish:
 3. Stop your codespace on `github.com/codespaces` to save your free hours.
 
 To learn more, see the [API quick start](api-quick-start.md) and the [API reference](api-reference.md).
+
+If a step fails, see [Troubleshooting](troubleshooting.md).
