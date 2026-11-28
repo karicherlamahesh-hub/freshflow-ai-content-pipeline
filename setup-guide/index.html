@@ -1,0 +1,1283 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://karicherlamahesh-hub.github.io/freshflow-ai-content-pipeline/setup-guide/">
+      
+      
+        <link rel="prev" href="../quick-start/">
+      
+      
+        <link rel="next" href="../troubleshooting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>Setup guide - FreshFlow AI Content Pipeline</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#set-up-freshflow-on-linux-with-docker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="FreshFlow AI Content Pipeline" class="md-header__button md-logo" aria-label="FreshFlow AI Content Pipeline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FreshFlow AI Content Pipeline
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setup guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/karicherlamahesh-hub/freshflow-ai-content-pipeline" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="FreshFlow AI Content Pipeline" class="md-nav__button md-logo" aria-label="FreshFlow AI Content Pipeline" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FreshFlow AI Content Pipeline
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/karicherlamahesh-hub/freshflow-ai-content-pipeline" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before you start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-open-a-linux-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Open a Linux terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-check-that-docker-is-installed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Check that Docker is installed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-a-storage-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create a storage volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-download-n8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Download n8n
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-start-n8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Start n8n
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-open-n8n-in-your-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Open n8n in your browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-import-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Import the workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-add-your-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Add your credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-publish-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Publish the workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-save-your-webhook-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Save your webhook path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-that-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Check that it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#send-a-test-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send a test request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-result-in-notion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the result in Notion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean up
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-call/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API call
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../http-status-codes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP status codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API quick start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before you start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-open-a-linux-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Open a Linux terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-check-that-docker-is-installed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Check that Docker is installed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-create-a-storage-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create a storage volume
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-download-n8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Download n8n
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-start-n8n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Start n8n
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-open-n8n-in-your-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Open n8n in your browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-import-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Import the workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-add-your-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Add your credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-publish-the-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Publish the workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-save-your-webhook-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Save your webhook path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-that-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check that it works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Check that it works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#send-a-test-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send a test request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-the-result-in-notion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check the result in Notion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clean up
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="set-up-freshflow-on-linux-with-docker">Set up FreshFlow on Linux with Docker</h1>
+<p>This guide shows you how to run FreshFlow on a Linux machine with Docker. You use GitHub Codespaces, so you need no install on your own computer. At the end, a test request creates a new row in your Notion table.</p>
+<h2 id="before-you-start">Before you start</h2>
+<p>You need:</p>
+<ul>
+<li>A GitHub account with <strong>Codespaces</strong>. The free plan gives 120 core hours a month, which is about 60 hours on the default 2-core codespace.</li>
+<li>A web browser.</li>
+<li>An Anthropic API key.</li>
+<li>A Notion integration token, and the <strong>FreshFlow Content Review</strong> table shared with that integration.</li>
+<li>The workflow file <code>docs/freshflow-workflow.json</code> in your repo.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Keep your keys private</p>
+<p>Paste your API key and your Notion token only into the credential boxes in n8n. Never put them in a file, in your repo, in the terminal or in a screenshot. Treat your webhook path like a password too: paste it only into the terminal with <code>read -rs</code>, and never into a file or a screenshot.</p>
+</div>
+<h2 id="steps">Steps</h2>
+<h3 id="1-open-a-linux-terminal">1. Open a Linux terminal</h3>
+<ol>
+<li>Open your FreshFlow repo on GitHub.</li>
+<li>Click <strong>Code</strong>, then the <strong>Codespaces</strong> tab.</li>
+<li>Click <strong>Create codespace on main</strong>.</li>
+</ol>
+<p>A code editor opens in your browser. At the bottom you should see a terminal with a prompt that ends in <code>(main) $</code>.</p>
+<h3 id="2-check-that-docker-is-installed">2. Check that Docker is installed</h3>
+<p>In the terminal, run:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
+</code></pre></div>
+<p>You should see a line that starts with <code>Docker version</code>.</p>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps
+</code></pre></div>
+<p>You should see only a header line (<code>CONTAINER ID</code>, <code>IMAGE</code>, and so on). An empty list means no container is running. If you see an error instead, close the terminal, open a new one and run the command again.</p>
+<h3 id="3-create-a-storage-volume">3. Create a storage volume</h3>
+<p>n8n keeps your workflows and credentials in a Docker volume. Run:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>volume<span class="w"> </span>create<span class="w"> </span>n8n_data
+</code></pre></div>
+<p>You should see <code>n8n_data</code> printed on the next line.</p>
+<h3 id="4-download-n8n">4. Download n8n</h3>
+<p>Run:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>docker.n8n.io/n8nio/n8n
+</code></pre></div>
+<p>This takes 1 to 3 minutes. You should see many lines that end with <code>Pull complete</code>, and a last line that starts with <code>Status:</code>. If the image is already on the machine, the last line says <code>Status: Image is up to date</code>. This is also correct.</p>
+<h3 id="5-start-n8n">5. Start n8n</h3>
+<p>Run this as one line:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--name<span class="w"> </span>n8n<span class="w"> </span>-p<span class="w"> </span><span class="m">5678</span>:5678<span class="w"> </span>-e<span class="w"> </span><span class="nv">GENERIC_TIMEZONE</span><span class="o">=</span>Asia/Kolkata<span class="w"> </span>-e<span class="w"> </span><span class="nv">TZ</span><span class="o">=</span>Asia/Kolkata<span class="w"> </span>-e<span class="w"> </span><span class="nv">N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">N8N_RUNNERS_ENABLED</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">N8N_PROXY_HOPS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">WEBHOOK_URL</span><span class="o">=</span><span class="s2">"https://</span><span class="si">${</span><span class="nv">CODESPACE_NAME</span><span class="si">}</span><span class="s2">-5678.</span><span class="si">${</span><span class="nv">GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN</span><span class="si">}</span><span class="s2">/"</span><span class="w"> </span>-e<span class="w"> </span><span class="nv">N8N_EDITOR_BASE_URL</span><span class="o">=</span><span class="s2">"https://</span><span class="si">${</span><span class="nv">CODESPACE_NAME</span><span class="si">}</span><span class="s2">-5678.</span><span class="si">${</span><span class="nv">GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN</span><span class="si">}</span><span class="s2">/"</span><span class="w"> </span>-v<span class="w"> </span>n8n_data:/home/node/.n8n<span class="w"> </span>docker.n8n.io/n8nio/n8n
+</code></pre></div>
+<p>If you are not in India, change the two timezone values (<code>GENERIC_TIMEZONE</code> and <code>TZ</code>) to your own, for example <code>Europe/London</code>.</p>
+<p>Wait about 30 seconds. You should see a line that starts with <code>Version:</code> and the line <code>Editor is now accessible via</code>.</p>
+<p>The terminal stays busy while n8n runs. Do not close it and do not press <strong>Ctrl + C</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may see notices about settings that will change in a future version. They are not errors. A pop-up may say that port 5678 is available. Close the pop-up and do not click <strong>Make Public</strong>.</p>
+</div>
+<h3 id="6-open-n8n-in-your-browser">6. Open n8n in your browser</h3>
+<ol>
+<li>In the panel at the bottom, click the <strong>Ports</strong> tab.</li>
+<li>Find port <strong>5678</strong>. Check that <strong>Visibility</strong> says <strong>Private</strong>.</li>
+<li>Hover over the address and click the globe icon (<strong>Open in Browser</strong>).</li>
+</ol>
+<p>You should see the page <strong>Set up owner account</strong>.</p>
+<ol>
+<li>Enter your email, your name and a new password. This account lives only inside your own n8n.</li>
+<li>Click <strong>Next</strong>. If n8n asks questions about you, click <strong>Get started</strong>. If it offers a free licence key, click <strong>Skip</strong>.</li>
+</ol>
+<p>You should see the n8n home page with an empty list of workflows.</p>
+<h3 id="7-import-the-workflow">7. Import the workflow</h3>
+<ol>
+<li>In the left menu, click <strong>+</strong>, then <strong>Workflow</strong>.</li>
+<li>Click the three dots (<strong>...</strong>) next to the workflow name, then <strong>Import from URL</strong>.</li>
+<li>Enter this address:<pre><code>https://raw.githubusercontent.com/karicherlamahesh-hub/freshflow-ai-content-pipeline/main/docs/freshflow-workflow.json
+</code></pre>
+</li>
+</ol>
+<p>If you use your own copy of the repo, replace <code>karicherlamahesh-hub</code> with your GitHub user name. The repo must be public, or the address will not open.</p>
+<p>You should see the workflow with the nodes <strong>Webhook</strong>, <strong>Writer</strong>, <strong>Checker</strong>, <strong>Translation</strong>, <strong>Save to Notion</strong> and <strong>Save error to Notion</strong>. Some nodes have a red mark because they have no credentials yet.</p>
+<h3 id="8-add-your-credentials">8. Add your credentials</h3>
+<ol>
+<li>Double-click the <strong>Writer</strong> node.</li>
+<li>Next to <strong>Credential</strong>, click <strong>Connect to Anthropic</strong>, then create a new credential.</li>
+<li>Paste your API key into <strong>API Key</strong> and click <strong>Save</strong>.</li>
+<li>Open the <strong>Checker</strong> node and the <strong>Translation</strong> node. In each one, choose the same credential from the <strong>Credential</strong> list.</li>
+<li>Double-click <strong>Save to Notion</strong>. Open the <strong>Credential</strong> list, click <strong>Create new credential</strong>, paste your token into <strong>Internal Integration Secret</strong> and click <strong>Save</strong>.</li>
+<li>Double-click <strong>Save error to Notion</strong> and choose the same Notion credential from the <strong>Credential</strong> list.</li>
+<li>Press <strong>Ctrl + S</strong>.</li>
+</ol>
+<p>You should see no red marks on the nodes.</p>
+<h3 id="9-publish-the-workflow">9. Publish the workflow</h3>
+<p>Click <strong>Publish</strong> at the top right.</p>
+<p>In a codespace you may see <strong>Connection lost</strong> at the top right instead of the <strong>Publish</strong> button. This is a known problem with the Codespaces proxy. Publish the workflow from the command line instead:</p>
+<ol>
+<li>In the terminal panel, click the <strong>+</strong> icon to open a second terminal.</li>
+<li>Run:<pre><code>ID=$(docker exec n8n n8n list:workflow | cut -d'|' -f1)
+docker exec n8n n8n publish:workflow --id="$ID"
+</code></pre>
+</li>
+</ol>
+<p>You should see a line that starts with <code>Publishing workflow with ID:</code>.</p>
+<p>The list command prints one line for each workflow, in the form <code>ID|name</code>. The first command keeps only the part before the <code>|</code>. If you have more than one workflow, run <code>docker exec n8n n8n list:workflow</code> on its own, copy the ID of your FreshFlow workflow, and use it in place of <code>"$ID"</code>.</p>
+<h3 id="10-save-your-webhook-path">10. Save your webhook path</h3>
+<p>Your workflow starts when a request reaches its webhook. You send the request from the terminal, so you need the path.</p>
+<ol>
+<li>In n8n, double-click the <strong>Webhook</strong> node.</li>
+<li>In the <strong>Path</strong> box, press <strong>Ctrl + A</strong>, then <strong>Ctrl + C</strong>. Close the node.</li>
+<li>
+<p>In the second terminal, run:</p>
+<pre><code>read -rs P
+</code></pre>
+</li>
+<li>
+<p>Press <strong>Ctrl + Shift + V</strong> once to paste, then press <strong>Enter</strong>. Nothing shows on screen.</p>
+</li>
+<li>Check the length:<pre><code>echo -n "$P" | wc -c
+</code></pre>
+</li>
+</ol>
+<p>You should see <code>36</code>. The path that n8n makes by itself has 36 characters. If you typed your own path, you will see a different number, and that is fine.</p>
+<h2 id="check-that-it-works">Check that it works</h2>
+<h3 id="send-a-test-request">Send a test request</h3>
+<p>In the second terminal, the one where you ran <code>read -rs P</code>, run this as one line. The variable <code>P</code> exists only in that terminal.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-w<span class="w"> </span><span class="s2">"\nHTTP %{http_code}\n"</span><span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"http://localhost:5678/webhook/</span><span class="nv">$P</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"request":"Write a short LinkedIn post about FreshFlow batch tracking"}'</span>
+</code></pre></div>
+<p>You should see:</p>
+<div class="highlight"><pre><span></span><code>{"message":"Workflow was started"}
+HTTP 200
+</code></pre></div>
+<p>This means the workflow started. It is not finished yet. Wait 1 to 2 minutes.</p>
+<h3 id="check-the-result-in-notion">Check the result in Notion</h3>
+<p>Open your <strong>FreshFlow Content Review</strong> table. A new row should appear with your request.</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approved</td>
+<td>The draft passed all rules.</td>
+</tr>
+<tr>
+<td>Refused</td>
+<td>The request gave no product facts, so FreshFlow wrote nothing.</td>
+</tr>
+<tr>
+<td>Needs human review</td>
+<td>The checker found a claim that the request does not support.</td>
+</tr>
+</tbody>
+</table>
+<p>The request above has no product facts, so the status should be <strong>Refused</strong>. This is the correct result. It shows that FreshFlow refuses to invent facts.</p>
+<p>If no new row appears after 2 minutes, see <a href="../troubleshooting/">Troubleshooting</a>.</p>
+<h2 id="clean-up">Clean up</h2>
+<p>When you finish:</p>
+<ol>
+<li>In the second terminal, run <code>unset P</code> to remove the webhook path from memory.</li>
+<li>In the first terminal, press <strong>Ctrl + C</strong> to stop n8n. Your workflow stays in the <code>n8n_data</code> volume.</li>
+<li>Stop your codespace. Open <code>github.com/codespaces</code>, click the three dots next to your codespace, and click <strong>Stop codespace</strong>. This saves your free hours.</li>
+</ol>
+<p>To use it again later, open the codespace from the same page and start n8n again with the command from step 5. Then repeat step 10, because the variable <code>P</code> is gone after you stop.</p>
+<p>To learn more, see the <a href="../api-quick-start/">API quick start</a> and the <a href="../api-reference/">API reference</a>.</p>
+<p>If a step fails, see <a href="../troubleshooting/">Troubleshooting</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

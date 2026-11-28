@@ -1,0 +1,428 @@
+{
+  "name": "FreshFlow content pipeline - API",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-haiku-5-5",
+          "mode": "list",
+          "cachedResultName": "claude-haiku-5-5"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.Request }}"
+            }
+          ]
+        },
+        "options": {
+          "system": "You are a content writer for FreshFlow Software. Follow these brand guide and compliance rules strictly.  Brand Guide Our made-up company is FreshFlow Software. It makes software that helps food and manufacturing businesses in India, like sweet makers, packaged snack companies, and distributors, manage stock, orders, and production. Tone: friendly, clear, and confident. Write like a helpful expert, not like a salesperson. Sentences: short and simple. One idea in each sentence. Words to use: simple, reliable, track, plan, easy. Words to avoid: best in the world, revolutionary, guaranteed, 100%, magic, cheapest. Always end with: one clear next step, like \"Book a demo.\"  Compliance Rules 1. Don't make claims you can't prove. Use numbers or percentages only if they come from an approved source. 2. Never promise or guarantee results. 3. Any mention of price must include: \"Prices may change. Contact sales for a current quote.\" 4. Don't name or compare competitors. 5. Don't say the software makes a business \"FSSAI compliant\". Say it \"helps track\" records. 6. Don't use customer names or quotes without approval. 7. Don't make health claims about any food product. 8. Don't include any personal details of real people. 9. A human must review every AI-written piece before it is published. 10. Every piece must end with a call to action.  Product facts rule: Use only the product details given in the request. If a detail is not given, do not add it. Never invent features, numbers, or customer results. Soft claims rule: Do not describe FreshFlow as easy, simple, easier, faster, less stressful, or all-in-one, and do not promise less effort, unless the request says so. Use \"simple\" and \"easy\" only for your writing style, not to describe the product. Benefit claims rule: Never state that FreshFlow saves time, reduces cost, or improves results, even if the request asks for it. If a request asks for such a claim, leave it out, set status to \"approved_with_changes\", and say what you left out in the reason. Missing facts rule: If the request gives no product facts for a feature, set status to \"refused\" and say in the reason that product facts are needed. Length rule: If the request asks for N sentences or N lines, write exactly N. The call to action counts as one of them. Do not add extra lines, notes, or labels. Status rule: If you removed or changed anything the request asked for, set status to \"approved_with_changes\" instead of \"approved\".  OUTPUT FORMAT: Reply with only a JSON object and nothing else. Use these keys: \"status\": \"approved\", \"approved_with_changes\", or \"refused\", \"content\": the finished text (an empty string if refused), \"reason\": one short sentence explaining a refusal or a change (an empty string if none). Do not use markdown code fences.",
+          "maxTokens": 2000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "5b1b2b98-0358-43a6-9bfe-76e15f9fba5d",
+      "name": "Writer",
+      "credentials": {
+        "anthropicApi": {
+          "id": "B5ofFVh7Lqo4GD6o",
+          "name": "Anthropic account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nfor (const item of $input.all()) {\n  let text = \"\";\n  const content = item.json.content;\n  if (Array.isArray(content)) {\n    for (const block of content) {\n      if (block.type === \"text\") {\n        text += block.text;\n      }\n    }\n  } else if (typeof content === \"string\") {\n    text = content;\n  }\n  text = text.replace(/```json|```/g, \"\").trim();\n  let data;\n  try {\n    data = JSON.parse(text);\n  } catch (e) {\n    data = { status: \"bad_format\", content: text, reason: \"Could not read as JSON\" };\n  }\n  results.push({\n    json: {\n      status: data.status || \"\",\n      content: data.content || \"\",\n      reason: data.reason || \"\"\n    }\n  });\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        0
+      ],
+      "id": "444cedc8-6714-42bb-8025-fcdac5fa0471",
+      "name": "Parse writer output"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-haiku-5-5",
+          "mode": "list",
+          "cachedResultName": "claude-haiku-5-5"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=REQUEST:\n{{ $('Content request form').item.json.Request }}\n\nDRAFT:\n{{ $json.content }}"
+            }
+          ]
+        },
+        "options": {
+          "system": "You are a strict compliance checker for FreshFlow Software. You will get a REQUEST (with the product facts it allows) and a DRAFT written by another writer. The rules below were written for the writer. You only judge the DRAFT against them. Be strict about: claims about the product that are not in the facts given in the request (for example \"in one place\", \"from start to finish\", \"easier\", \"less stress\", numbers, results, guarantees), banned words, wrong length or line count, and a missing call to action.  Brand Guide Our made-up company is FreshFlow Software. It makes software that helps food and manufacturing businesses in India, like sweet makers, packaged snack companies, and distributors, manage stock, orders, and production. Tone: friendly, clear, and confident. Write like a helpful expert, not like a salesperson. Sentences: short and simple. One idea in each sentence. Words to avoid: best in the world, revolutionary, guaranteed, 100%, magic, cheapest. Always end with: one clear next step, like \"Book a demo.\"  Compliance Rules 1. Don't make claims you can't prove. Use numbers or percentages only if they come from an approved source. 2. Never promise or guarantee results. 3. Any mention of price must include: \"Prices may change. Contact sales for a current quote.\" 4. Don't name or compare competitors. 5. Don't say the software makes a business \"FSSAI compliant\". Say it \"helps track\" records. 6. Don't use customer names or quotes without approval. 7. Don't make health claims about any food product. 8. Don't include any personal details of real people. 9. A human must review every AI-written piece before it is published. 10. Every piece must end with a call to action.  Product facts rule: Use only the product details given in the request. Never invent features, numbers, or customer results. Soft claims rule: Do not describe FreshFlow as easy, simple, easier, faster, less stressful, or all-in-one, and do not promise less effort, unless the request says so. Benefit claims rule: The draft must not state that FreshFlow saves time, reduces cost, or improves results, even if the request asked for it. If it does, the verdict is \"fail\" and the problem is that phrase. Length rule: If the request asks for N sentences or N lines, the draft must have exactly N. The call to action counts as one of them. No extra lines, notes, or labels.  Reply with only a JSON object and nothing else, using these keys: \"verdict\": \"pass\" or \"fail\", \"problems\": a list of short strings, each quoting the exact phrase and the rule it breaks (an empty list if none). Do not use markdown code fences."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        816,
+        0
+      ],
+      "id": "a124cf78-125f-445b-aa75-c79b743177fd",
+      "name": "Checker",
+      "credentials": {
+        "anthropicApi": {
+          "id": "B5ofFVh7Lqo4GD6o",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const writer = $('Parse writer output').first().json;\nconst form = $('Content request form').first().json;\nconst results = [];\nfor (const item of $input.all()) {\n  let text = \"\";\n  const content = item.json.content;\n  if (Array.isArray(content)) {\n    for (const block of content) {\n      if (block.type === \"text\") {\n        text += block.text;\n      }\n    }\n  } else if (typeof content === \"string\") {\n    text = content;\n  }\n  text = text.replace(/```json|```/g, \"\").trim();\n  let data;\n  try {\n    data = JSON.parse(text);\n  } catch (e) {\n    data = { verdict: \"bad_format\", problems: [text] };\n  }\n  const problems = Array.isArray(data.problems) ? data.problems.join(\" | \") : String(data.problems || \"\");\n  results.push({\n    json: {\n      request: form.Request,\n      status: writer.status,\n      content: writer.content,\n      reason: writer.reason,\n      verdict: data.verdict || \"\",\n      problems: problems\n    }\n  });\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "f588457f-ba12-4a69-b6b4-80f894e9272b",
+      "name": "Parse checker result"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19d7fd9e-109c-4e9c-af9e-435dd5ec4501",
+              "name": "final_status",
+              "value": "={{ $json.status === 'refused' ? 'Refused' : ($json.verdict === 'pass' ? 'Approved' : 'Needs human review') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1408,
+        0
+      ],
+      "id": "0e5e428e-3dbe-4a84-ad50-3cb4f5b208c4",
+      "name": "Set final status"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-haiku-5-5",
+          "mode": "list",
+          "cachedResultName": "claude-haiku-5-5"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=STATUS: {{ $json.final_status }}\n\nTEXT:\n{{ $json.content }}"
+            }
+          ]
+        },
+        "options": {
+          "system": "You are a Telugu translator for FreshFlow Software, an Indian software company for food and manufacturing businesses. You will get a STATUS and a TEXT in English.  If STATUS is not exactly \"Approved\", reply with only {\"translation\": \"\"} and nothing else.  If STATUS is \"Approved\", translate the TEXT into natural, simple Telugu. Rules: 1. Do not add, remove, or soften any claim. The Telugu must say exactly what the English says. 2. Keep the same number of sentences or lines as the English. 3. Keep these in English letters, exactly as written: FreshFlow, FreshFlow Software. 4. Keep numbers and prices as written, for example Rs 4,999. 5. Use this glossary:    \"Book a demo\" = \"డెమో బుక్ చేయండి\"    \"Prices may change. Contact sales for a current quote.\" = \"ధరలు మారవచ్చు. తాజా కోట్ కోసం సేల్స్ బృందాన్ని సంప్రదించండి.\"  Reply with only a JSON object and nothing else, in this form: {\"translation\": \"the Telugu text\"} Do not use markdown code fences.",
+          "maxTokens": 3000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        0
+      ],
+      "id": "aa412577-1b15-4cf8-a6fc-fd9422b11e08",
+      "name": "Translator",
+      "credentials": {
+        "anthropicApi": {
+          "id": "B5ofFVh7Lqo4GD6o",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const original = $('Set final status').first().json;\nlet text = \"\";\nconst content = $input.first().json.content;\nif (Array.isArray(content)) {\n  for (const block of content) {\n    if (block.type === \"text\") {\n      text += block.text;\n    }\n  }\n} else if (typeof content === \"string\") {\n  text = content;\n}\ntext = text.replace(/```json|```/g, \"\").trim();\nlet translation = \"\";\ntry {\n  translation = JSON.parse(text).translation || \"\";\n} catch (e) {\n  translation = \"\";\n}\nreturn [{ json: { ...original, translation: translation } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        0
+      ],
+      "id": "d73d2ddd-cdd2-40ba-811d-3f15ecbb6a19",
+      "name": "Parse translation"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "4176404d-046c-80f9-a6d9-000b0c5a72cf"
+        },
+        "title": "={{ $json.request.substring(0, 60) }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "=Request|rich_text",
+              "textContent": "={{ $json.request }}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "={{ $json.final_status }}"
+            },
+            {
+              "key": "Content|rich_text",
+              "textContent": "={{ $json.content }}"
+            },
+            {
+              "key": "Attempts|number",
+              "numberValue": 1
+            },
+            {
+              "key": "Checker Notes|rich_text",
+              "textContent": "={{ $json.final_status === 'Refused' ? $json.reason : ($json.problems || $json.reason) }}"
+            },
+            {
+              "key": "Translation|rich_text",
+              "textContent": "={{ $json.translation }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        2128,
+        0
+      ],
+      "id": "919ba426-d60d-40f7-8eb5-96b9240f70b1",
+      "name": "Save to Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "1KoT6HbQRYdpCGGB",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "dataSourceId": {
+          "__rl": true,
+          "value": "41a6404d-046c-80a4-96f8-000b0ceeb1d9",
+          "mode": "list",
+          "cachedResultName": "41a6404d-046c-80a4-96f8-000b0ceeb1d9",
+          "cachedResultUrl": "https://app.notion.com/p/41a6404d046c80fe9477cb5c8afd27f4"
+        },
+        "title": "={{ 'Failed: ' + ($('Content request form').first().json.Request || '(no request text)').substring(0, 50) }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Request|rich_text",
+              "textContent": "={{ $('Content request form').first().json.Request || '(no request text)' }}"
+            },
+            {
+              "key": "Error details|rich_text",
+              "textContent": "={{ typeof $json.error === 'string' ? $json.error : JSON.stringify($json.error) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        640,
+        144
+      ],
+      "id": "ef8a76ed-321d-403a-b0f7-161bd80dc25d",
+      "name": "Save error to Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "1KoT6HbQRYdpCGGB",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e45c01de-6406-45dc-b86c-a1371f7329d9",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        112,
+        -192
+      ],
+      "id": "2fdbcb94-5639-423f-9cc6-033a7799b107",
+      "name": "Webhook",
+      "webhookId": "YOUR-WEBHOOK-ID"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "910b1edc-91b1-4550-a2e4-177d2e260486",
+              "name": "=Request",
+              "value": "={{ $json.body.request }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        320,
+        -192
+      ],
+      "id": "d8855406-0c00-4965-ba28-b23e04df504e",
+      "name": "Content request form"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Writer": {
+      "main": [
+        [
+          {
+            "node": "Parse writer output",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Save error to Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse writer output": {
+      "main": [
+        [
+          {
+            "node": "Checker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Checker": {
+      "main": [
+        [
+          {
+            "node": "Parse checker result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse checker result": {
+      "main": [
+        [
+          {
+            "node": "Set final status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set final status": {
+      "main": [
+        [
+          {
+            "node": "Translator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Translator": {
+      "main": [
+        [
+          {
+            "node": "Parse translation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse translation": {
+      "main": [
+        [
+          {
+            "node": "Save to Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Content request form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content request form": {
+      "main": [
+        [
+          {
+            "node": "Writer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "fba9aa33-8f22-4bfb-9c64-615cdea92d03",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "967dfcba3454a5bf2991cac23f70b723136baef4e8d629e25d5be22e75a45fbd"
+  },
+  "nodeGroups": [],
+  "id": "JYHARMNLtkSKJ9D1",
+  "tags": []
+}
