@@ -9,6 +9,7 @@ nav:
   - Home: index.md
   - Quick start: quick-start.md
   - Setup guide: setup-guide.md
+  - Troubleshooting: troubleshooting.md
   - How it works: how-it-works.md
   - API call: api-call.md
   - HTTP status codes: http-status-codes.md
